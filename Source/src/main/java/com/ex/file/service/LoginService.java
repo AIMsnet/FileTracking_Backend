@@ -15,11 +15,11 @@ public class LoginService {
 	@Autowired
 	private DeskRepository deskRepository;
 	
-	public Desk login(String departmentName, String deskName, String password) {
+	public Desk deskLogin(String departmentName, String deskName, String password) {
 		return deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
 	}
 	
-	public Desk saveDesk(Desk desk) {
+	public Desk saveUpdateDesk(Desk desk) {
 		return deskRepository.save(desk);
 	}
 	

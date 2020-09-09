@@ -15,17 +15,17 @@ import com.ex.file.dto.ResultModel;
 import com.ex.file.entity.Desk;
 
 @RestController 
-@RequestMapping(value="/deskLogin")
+@RequestMapping(value="/login")
 public class LoginController {
 	
 	@Autowired
 	private LoginService loginService;
 	
-	@RequestMapping(value="/login/{departmentName}/{deskName}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> login(@PathVariable("departmentName") String departmentName, @PathVariable("deskName") String deskName , @PathVariable("password") String password){
+	@RequestMapping(value="/deskLogin/{departmentName}/{deskName}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentName") String departmentName, @PathVariable("deskName") String deskName , @PathVariable("password") String password){
 		ResultModel resultModel = new ResultModel();
 		try{
-			Desk response=loginService.login(departmentName, deskName, password);
+			Desk response=loginService.deskLogin(departmentName, deskName, password);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
@@ -35,11 +35,11 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/saveUDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveDesk(@RequestBody Desk desk){
+	@RequestMapping(value="/saveUpdateDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveUpdateDesk(@RequestBody Desk desk){
 		ResultModel resultModel = new ResultModel();
 		try{
-			Desk response=loginService.saveDesk(desk);
+			Desk response=loginService.saveUpdateDesk(desk);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
