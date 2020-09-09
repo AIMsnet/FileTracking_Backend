@@ -1,11 +1,15 @@
 package com.ex.file.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ex.file.dao.DepartmentRepository;
 import com.ex.file.dao.DeskRepository;
+import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
 
 @Service
@@ -15,6 +19,9 @@ public class LoginService {
 	@Autowired
 	private DeskRepository deskRepository;
 	
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	
 	public Desk deskLogin(String departmentName, String deskName, String password) {
 		return deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
 	}
@@ -23,4 +30,11 @@ public class LoginService {
 		return deskRepository.save(desk);
 	}
 	
+	public List<Desk> getDeskByDepartment(Integer departmentId){
+		return deskRepository.findByDepartmentId(departmentId);
+	}
+	
+	public List<Department> getAllDepartment(){
+		return (List<Department>) departmentRepository.findAll();
+	}
 }

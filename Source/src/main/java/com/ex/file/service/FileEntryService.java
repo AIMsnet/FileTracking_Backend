@@ -21,7 +21,7 @@ public class FileEntryService {
 		return fileEntryRepository.findByDeskId(deskId);
 	}
 	
-	public FileEntry saveFileEntry(FileEntry fileEntry) {
+	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {
 		return fileEntryRepository.save(fileEntry);
 	}
 }

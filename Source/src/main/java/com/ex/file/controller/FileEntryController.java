@@ -23,8 +23,8 @@ public class FileEntryController {
 	@Autowired
 	private FileEntryService fileEntryService;
 	
-	@RequestMapping(value="/getFileEntryByDeskId/{departmentName}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel>  getFileEntryByDeskId(@PathVariable("deskId") Integer deskId){
+	@RequestMapping(value="/getFileEntryByDeskId/{deskId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileEntryByDeskId(@PathVariable("deskId") Integer deskId){
 		ResultModel resultModel = new ResultModel();
 		try{
 			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(deskId);
@@ -37,11 +37,11 @@ public class FileEntryController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/saveFileEntry", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveFileEntry(@RequestBody FileEntry fileEntry){
+	@RequestMapping(value="/saveUpdateFileEntry", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveUpdateFileEntry(@RequestBody FileEntry fileEntry){
 		ResultModel resultModel = new ResultModel();
 		try{
-			FileEntry response=fileEntryService.saveFileEntry(fileEntry);
+			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){

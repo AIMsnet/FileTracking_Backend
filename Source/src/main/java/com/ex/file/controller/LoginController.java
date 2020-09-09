@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import com.ex.file.service.LoginService;
 import com.ex.file.dto.ResultModel;
+import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
 
 @RestController 
@@ -48,4 +49,32 @@ public class LoginController {
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
+	
+	@RequestMapping(value="/getDeskByDepartment/{departmentId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getDeskByDepartment(@PathVariable("departmentId") Integer departmentId){
+		ResultModel resultModel = new ResultModel();
+		try{
+			List<Desk> response=loginService.getDeskByDepartment(departmentId);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getAllDepartment", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getAllDepartment(){
+		ResultModel resultModel = new ResultModel();
+		try{
+			List<Department> response=loginService.getAllDepartment();
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
 }
