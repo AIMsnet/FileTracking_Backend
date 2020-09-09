@@ -1,5 +1,7 @@
 package com.ex.file.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ex.file.service.LoginService;
 import com.ex.file.dto.ResultModel;
-import com.ex.file.entity.Desk;
+import com.ex.file.entity.FileEntry;
+import com.ex.file.service.FileEntryService;
 
 @RestController 
-@RequestMapping(value="/deskLogin")
-public class LoginController {
+@RequestMapping(value="/fileEntry")
+public class FileEntryController {
 	
 	@Autowired
-	private LoginService loginService;
+	private FileEntryService fileEntryService;
 	
-	@RequestMapping(value="/login/{departmentName}/{deskName}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> login(@PathVariable("departmentName") String departmentName, @PathVariable("deskName") String deskName , @PathVariable("password") String password){
+	@RequestMapping(value="/getFileEntryByDeskId/{departmentName}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel>  getFileEntryByDeskId(@PathVariable("deskId") Integer deskId){
 		ResultModel resultModel = new ResultModel();
 		try{
-			Desk response=loginService.login(departmentName, deskName, password);
+			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(deskId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
@@ -35,11 +37,11 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/saveUDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveDesk(@RequestBody Desk desk){
+	@RequestMapping(value="/saveFileEntry", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveFileEntry(@RequestBody FileEntry fileEntry){
 		ResultModel resultModel = new ResultModel();
 		try{
-			Desk response=loginService.saveDesk(desk);
+			FileEntry response=fileEntryService.saveFileEntry(fileEntry);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
@@ -48,4 +50,5 @@ public class LoginController {
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
+
 }
