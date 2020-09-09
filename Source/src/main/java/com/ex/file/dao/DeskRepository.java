@@ -9,6 +9,6 @@ import com.ex.file.entity.Desk;
 @Repository
 public interface DeskRepository extends CrudRepository<Desk, Integer>{
 	
-	@Query("select m from Desk where m.department.departmentName=:departmentName and m.deskName=:deskName and m.password=:password")
+	@Query("select m from Desk m where m.department.departmentName=:departmentName and m.deskName=:deskName and m.password=:password")
 	public Desk findByDepartmentNameAndDeskNameAndPassword(String departmentName, String deskName, String password);
 }
