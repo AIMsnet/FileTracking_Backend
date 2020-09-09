@@ -41,7 +41,7 @@ public class Desk implements Serializable{
 	private Integer mobileNumber;
 	
 	@ManyToOne
-	@JoinColumn(name="desk")
+	@JoinColumn(name="department_id")
 	private Department department;
 	
 	@JsonIgnore

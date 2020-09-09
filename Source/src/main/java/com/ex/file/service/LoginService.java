@@ -13,6 +13,7 @@ public class LoginService {
 	private DeskRepository deskRepository;
 	
 	public Desk login(String departmentName, String deskName, String password) {
+		System.out.println("login");
 		return deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
 	}
 	
