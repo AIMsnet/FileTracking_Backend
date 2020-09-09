@@ -1,6 +1,7 @@
 package com.ex.file.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="desk")
@@ -37,8 +41,12 @@ public class Desk implements Serializable{
 	private Integer mobileNumber;
 	
 	@ManyToOne
-	@JoinColumn(name="department_id")
+	@JoinColumn(name="desk")
 	private Department department;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="desk")
+    private List<FileEntry> fileEntry;
 
 	public Integer getDeskId() {
 		return deskId;
@@ -86,5 +94,21 @@ public class Desk implements Serializable{
 
 	public void setMobileNumber(Integer mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public List<FileEntry> getFileEntry() {
+		return fileEntry;
+	}
+
+	public void setFileEntry(List<FileEntry> fileEntry) {
+		this.fileEntry = fileEntry;
 	}
 }
