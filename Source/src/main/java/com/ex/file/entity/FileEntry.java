@@ -3,6 +3,7 @@ package com.ex.file.entity;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.Year;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="file_entry")
@@ -20,11 +24,11 @@ public class FileEntry implements Serializable{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-    private Integer id;
+	@Column(name="file_id")
+    private Integer fileId;
 	
 	@Column(name="file_created_year")
-	private Year fileCreatedYear;
+	private String fileCreatedYear;
 	
 	@Column(name="file_date")
 	private Date fileDate;
@@ -47,6 +51,9 @@ public class FileEntry implements Serializable{
 	@Column(name="total_pages_of_attached_docs")
 	private String totalPagesOfAttachedDocs;
 	
+	@Column(name="file_status")
+	private String fileStatus;
+	
 	@Column(name="created_by")
 	private String createdBy;
 	
@@ -62,20 +69,24 @@ public class FileEntry implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="desk_id")
 	private Desk desk;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="fileEntry")
+    private List<NotingEntry> notingEntry;
 
-	public Integer getId() {
-		return id;
+	public Integer getFileId() {
+		return fileId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
 	}
 
-	public Year getFileCreatedYear() {
+	public String getFileCreatedYear() {
 		return fileCreatedYear;
 	}
 
-	public void setFileCreatedYear(Year fileCreatedYear) {
+	public void setFileCreatedYear(String fileCreatedYear) {
 		this.fileCreatedYear = fileCreatedYear;
 	}
 
@@ -174,6 +185,20 @@ public class FileEntry implements Serializable{
 	public void setDesk(Desk desk) {
 		this.desk = desk;
 	}
-	
-	
+
+	public String getFileStatus() {
+		return fileStatus;
+	}
+
+	public void setFileStatus(String fileStatus) {
+		this.fileStatus = fileStatus;
+	}
+
+	public List<NotingEntry> getNotingEntry() {
+		return notingEntry;
+	}
+
+	public void setNotingEntry(List<NotingEntry> notingEntry) {
+		this.notingEntry = notingEntry;
+	}
 }

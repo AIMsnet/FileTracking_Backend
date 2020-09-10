@@ -18,6 +18,7 @@ public class FileEntryService {
 	private FileEntryRepository fileEntryRepository;
 
 	public List<FileEntry> getFileEntryByDeskId(Integer deskId){
+		System.out.println("desk");
 		return fileEntryRepository.findByDeskId(deskId);
 	}
 	

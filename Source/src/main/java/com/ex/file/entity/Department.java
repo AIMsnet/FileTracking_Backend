@@ -28,6 +28,10 @@ public class Department implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="department")
     private List<Desk> desk;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="department")
+    private List<NotingEntryForwarded> notingEntryForwarded;
 
 	public Integer getDepartmentId() {
 		return departmentId;
@@ -51,5 +55,13 @@ public class Department implements Serializable{
 
 	public void setDesk(List<Desk> desk) {
 		this.desk = desk;
+	}
+
+	public List<NotingEntryForwarded> getNotingEntryForwarded() {
+		return notingEntryForwarded;
+	}
+
+	public void setNotingEntryForwarded(List<NotingEntryForwarded> notingEntryForwarded) {
+		this.notingEntryForwarded = notingEntryForwarded;
 	}	
 }

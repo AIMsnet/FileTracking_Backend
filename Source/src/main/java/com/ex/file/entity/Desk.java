@@ -47,6 +47,10 @@ public class Desk implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="desk")
     private List<FileEntry> fileEntry;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="desk")
+    private List<NotingEntryForwarded> notingEntryForwarded;
 
 	public Integer getDeskId() {
 		return deskId;
@@ -110,5 +114,13 @@ public class Desk implements Serializable{
 
 	public void setFileEntry(List<FileEntry> fileEntry) {
 		this.fileEntry = fileEntry;
+	}
+
+	public List<NotingEntryForwarded> getNotingEntryForwarded() {
+		return notingEntryForwarded;
+	}
+
+	public void setNotingEntryForwarded(List<NotingEntryForwarded> notingEntryForwarded) {
+		this.notingEntryForwarded = notingEntryForwarded;
 	}
 }
