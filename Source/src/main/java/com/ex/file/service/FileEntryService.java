@@ -23,6 +23,19 @@ public class FileEntryService {
 	}
 	
 	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {
-		return fileEntryRepository.save(fileEntry);
+		FileEntry fileSave=fileEntryRepository.save(fileEntry);
+		String fileStringId=null;
+		FileEntry fileEntryData=fileEntryRepository.findByFileId(fileSave.getFileId());
+		if(!fileEntryData.equals(null)) {
+			
+			fileStringId="File-"+fileEntryData.getFileId();
+			fileEntryData.setFileStringId(fileStringId);
+			fileEntryRepository.save(fileEntryData);
+		}
+		return fileEntryData;
+	}
+	
+	public FileEntry getFileEntryByFilestringId(String fileStringId){
+		return fileEntryRepository.findByFileStringId(fileStringId);
 	}
 }

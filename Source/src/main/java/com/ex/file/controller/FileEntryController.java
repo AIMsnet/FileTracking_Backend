@@ -51,4 +51,17 @@ public class FileEntryController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
 
+	@RequestMapping(value="/getFileEntryByFileStringId/{fileStringId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileEntryByFileStringId(@PathVariable("fileStringId") String fileStringId){
+		ResultModel resultModel = new ResultModel();
+		try{
+			FileEntry response=fileEntryService.getFileEntryByFilestringId(fileStringId);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
 }

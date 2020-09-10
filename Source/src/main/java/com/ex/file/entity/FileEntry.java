@@ -54,6 +54,9 @@ public class FileEntry implements Serializable{
 	@Column(name="file_status")
 	private String fileStatus;
 	
+	@Column(name="file_string_id")
+    private String fileStringId;
+	
 	@Column(name="created_by")
 	private String createdBy;
 	
@@ -144,6 +147,14 @@ public class FileEntry implements Serializable{
 
 	public void setTotalPagesOfAttachedDocs(String totalPagesOfAttachedDocs) {
 		this.totalPagesOfAttachedDocs = totalPagesOfAttachedDocs;
+	}
+
+	public String getFileStringId() {
+		return fileStringId;
+	}
+
+	public void setFileStringId(String fileStringId) {
+		this.fileStringId = fileStringId;
 	}
 
 	public String getCreatedBy() {
