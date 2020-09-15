@@ -77,4 +77,18 @@ public class LoginController {
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/saveUpdateDepartment", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveUpdateDepartment(@RequestBody Department department){
+		ResultModel resultModel = new ResultModel();
+		try{
+			Department response=loginService.saveUpdateDepartment(department);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}		
 }

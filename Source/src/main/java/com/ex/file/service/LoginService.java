@@ -37,4 +37,8 @@ public class LoginService {
 	public List<Department> getAllDepartment(){
 		return (List<Department>) departmentRepository.findAll();
 	}
+	
+	public Department saveUpdateDepartment(Department department) {
+		return departmentRepository.save(department);
+	}
 }

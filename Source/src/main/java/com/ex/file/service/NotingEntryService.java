@@ -43,7 +43,7 @@ public class NotingEntryService {
 		notingEntry.setTipniSubject(dto.getNotingEntry().getTipniSubject());
 		notingEntry.setUpdaeDate(dto.getNotingEntry().getUpdaeDate());
 		notingEntry.setUpdatedBy(dto.getNotingEntry().getUpdatedBy());
-		notingEntry.setTipniStatus(dto.getNotingEntry().getTipniStatus());
+		notingEntry.setTipniStatus("Saved");
 		NotingEntry parent = notingEntryRepository.save(notingEntry);
 		NotingEntryForwarded notingEntryForwarded = new NotingEntryForwarded();
 		notingEntryForwarded.setDepartment(dto.getNotingEntryForwarded().getDepartment());
@@ -68,7 +68,7 @@ public class NotingEntryService {
 			notingEntry.setTipniSubject(dto.getNotingEntry().getTipniSubject());
 			notingEntry.setUpdaeDate(dto.getNotingEntry().getUpdaeDate());
 			notingEntry.setUpdatedBy(dto.getNotingEntry().getUpdatedBy());
-			notingEntry.setTipniStatus(dto.getNotingEntry().getTipniStatus());
+			notingEntry.setTipniStatus("Forwarded");
 			NotingEntry parent = notingEntryRepository.save(notingEntry);
 			NotingEntryForwarded notingEntryForwarded = notingEntryForwardedRepository
 					.findByNotingEntryId(notingEntry.getNotingEntryId());
@@ -84,5 +84,9 @@ public class NotingEntryService {
 
 	public List<NotingEntryForwarded> getNotingEntryByDeskId(Integer deskId) {
 		return notingEntryForwardedRepository.findByDeskId(deskId);
+	}
+	
+	public List<NotingEntryForwarded> getNotingEntryByTipniStatus(String status){
+		return notingEntryForwardedRepository.findByTipniStatus(status);
 	}
 }

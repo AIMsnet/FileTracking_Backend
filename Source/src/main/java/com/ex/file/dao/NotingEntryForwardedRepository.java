@@ -16,4 +16,7 @@ public interface NotingEntryForwardedRepository extends CrudRepository<NotingEnt
 	
 	@Query("select m from NotingEntryForwarded m where m.notingEntry.notingEntryId=:notingEntryId")
 	public NotingEntryForwarded findByNotingEntryId(Integer notingEntryId);
+	
+	@Query("select m from NotingEntryForwarded m where m.notingEntry.tipniStatus=:tipniStatus")
+	public List<NotingEntryForwarded> findByTipniStatus(String tipniStatus);
 }

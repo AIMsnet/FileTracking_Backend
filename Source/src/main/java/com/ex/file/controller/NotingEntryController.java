@@ -65,4 +65,18 @@ public class NotingEntryController {
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
+	
+	@RequestMapping(value="/getNotingEntryByTipniStatus/{tipniStatus}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getNotingEntryByTipniStatus(@PathVariable("tipniStatus") String tipniStatus){
+		ResultModel resultModel = new ResultModel();
+		try{
+			List<NotingEntryForwarded> response=notingEntryService.getNotingEntryByTipniStatus(tipniStatus);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
 }
