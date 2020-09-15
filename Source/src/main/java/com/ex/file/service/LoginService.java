@@ -41,4 +41,8 @@ public class LoginService {
 	public Department saveUpdateDepartment(Department department) {
 		return departmentRepository.save(department);
 	}
+	
+	public Desk getDeskByDeskId(Integer deskId) {
+		return deskRepository.findByDeskId(deskId);
+	}
 }

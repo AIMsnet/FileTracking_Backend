@@ -14,4 +14,6 @@ public interface DeskRepository extends CrudRepository<Desk, Integer>{
 	
 	@Query("select m from Desk m where m.department.departmentId=:departmentId")
 	public List<Desk> findByDepartmentId(Integer departmentId);
+	
+	public Desk findByDeskId(Integer deskId);
 }
