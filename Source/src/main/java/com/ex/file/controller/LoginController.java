@@ -14,6 +14,7 @@ import com.ex.file.service.LoginService;
 import com.ex.file.dto.ResultModel;
 import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
+import com.ex.file.entity.FileType;
 
 @RestController 
 @RequestMapping(value="/login")
@@ -97,6 +98,34 @@ public class LoginController {
 		ResultModel resultModel = new ResultModel();
 		try{
 			Desk response=loginService.getDeskByDeskId(deskId);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getAllFileType", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getAllFileType(){
+		ResultModel resultModel = new ResultModel();
+		try{
+			List<FileType> response=loginService.getAllFileType();
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/saveUpdateFileType", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveUpdateFileType(@RequestBody FileType fileType){
+		ResultModel resultModel = new ResultModel();
+		try{
+			FileType response=loginService.saveUpdateFileType(fileType);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){

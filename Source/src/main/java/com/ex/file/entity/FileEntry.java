@@ -2,7 +2,6 @@ package com.ex.file.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.Year;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,9 +31,6 @@ public class FileEntry implements Serializable{
 	
 	@Column(name="file_date")
 	private Date fileDate;
-	
-	@Column(name="file_type")
-	private String fileType;
 	
 	@Column(name="manual_file_no")
 	private Integer manualFileNo;
@@ -73,6 +69,10 @@ public class FileEntry implements Serializable{
 	@JoinColumn(name="desk_id")
 	private Desk desk;
 	
+	@ManyToOne
+	@JoinColumn(name="file_type_id")
+	private FileType fileType;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy="fileEntry")
     private List<NotingEntry> notingEntry;
@@ -99,14 +99,6 @@ public class FileEntry implements Serializable{
 
 	public void setFileDate(Date fileDate) {
 		this.fileDate = fileDate;
-	}
-
-	public String getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
 	}
 
 	public Integer getManualFileNo() {
@@ -211,5 +203,13 @@ public class FileEntry implements Serializable{
 
 	public void setNotingEntry(List<NotingEntry> notingEntry) {
 		this.notingEntry = notingEntry;
+	}
+
+	public FileType getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(FileType fileType) {
+		this.fileType = fileType;
 	}
 }

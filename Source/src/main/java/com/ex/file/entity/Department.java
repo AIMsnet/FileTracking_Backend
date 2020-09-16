@@ -1,6 +1,7 @@
 package com.ex.file.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,6 +25,24 @@ public class Department implements Serializable{
 	
 	@Column(name="department_name")
 	private String departmentName;
+	
+	@Column(name="location")
+	private String location;
+	
+	@Column(name="hod_of_department")
+	private String hodOfDepartment;
+	
+	@Column(name="created_by")
+	private String createdBy;
+	
+	@Column(name="updated_by")
+	private String updatedBy;
+	
+	@Column(name="created_date")
+	private Timestamp createdDate;
+	
+	@Column(name="updated_date")
+	private Timestamp updatedDate;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="department")
@@ -63,5 +82,53 @@ public class Department implements Serializable{
 
 	public void setNotingEntryForwarded(List<NotingEntryForwarded> notingEntryForwarded) {
 		this.notingEntryForwarded = notingEntryForwarded;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getHodOfDepartment() {
+		return hodOfDepartment;
+	}
+
+	public void setHodOfDepartment(String hodOfDepartment) {
+		this.hodOfDepartment = hodOfDepartment;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Timestamp updatedDate) {
+		this.updatedDate = updatedDate;
 	}	
 }
