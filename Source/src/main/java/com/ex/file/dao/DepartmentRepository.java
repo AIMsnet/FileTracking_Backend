@@ -11,5 +11,6 @@ import com.ex.file.entity.Department;
 public interface DepartmentRepository extends CrudRepository<Department, Integer>{
 
 	public List<Department> findAll();
-
+	
+	public Department findByDepartmentId(Integer departmentId);
 }

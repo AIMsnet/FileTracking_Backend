@@ -55,6 +55,10 @@ public class LoginService {
 		return (List<Department>) departmentRepository.findAll();
 	}
 	
+	public Department getDepartmentByDepartmentId(Integer departmentId) {
+		return departmentRepository.findByDepartmentId(departmentId);
+	}
+	
 	public Department saveUpdateDepartment(Department department) {
 		return departmentRepository.save(department);
 	}
@@ -65,6 +69,10 @@ public class LoginService {
 	
 	public List<FileType> getAllFileType(){
 		return (List<FileType>) fileTypeRepository.findAll();
+	}
+	
+	public FileType getFileTypeByFileTypeId(Integer fileTypeId) {
+		return fileTypeRepository.findByFileTypeId(fileTypeId);
 	}
 	
 	public FileType saveUpdateFileType(FileType fileType) {

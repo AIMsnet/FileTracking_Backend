@@ -7,5 +7,6 @@ import com.ex.file.entity.FileType;
 
 @Repository
 public interface FileTypeRepository extends CrudRepository<FileType, Integer>{
-
+	
+	public FileType findByFileTypeId(Integer fileTypeId);
 }

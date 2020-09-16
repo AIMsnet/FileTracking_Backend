@@ -79,6 +79,20 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/getDepartmentByDepartmentId/{departmentId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getDepartmentByDepartmentId(@PathVariable("departmentId") Integer departmentId){
+		ResultModel resultModel = new ResultModel();
+		try{
+			Department response=loginService.getDepartmentByDepartmentId(departmentId);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/saveUpdateDepartment", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultModel> saveUpdateDepartment(@RequestBody Department department){
 		ResultModel resultModel = new ResultModel();
@@ -112,6 +126,20 @@ public class LoginController {
 		ResultModel resultModel = new ResultModel();
 		try{
 			List<FileType> response=loginService.getAllFileType();
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getFileTypeByFileTypeId/{fileTypeId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileTypeByFileTypeId(@PathVariable("fileTypeId") Integer fileTypeId){
+		ResultModel resultModel = new ResultModel();
+		try{
+			FileType response=loginService.getFileTypeByFileTypeId(fileTypeId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
