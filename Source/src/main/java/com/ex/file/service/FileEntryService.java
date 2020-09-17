@@ -16,10 +16,12 @@ public class FileEntryService {
 	
 	@Autowired
 	private FileEntryRepository fileEntryRepository;
+	
+	private Integer deskId;
 
-	public List<FileEntry> getFileEntryByDeskId(Integer deskId){
+	public List<FileEntry> getFileEntryByDeskId(){
 		System.out.println("desk");
-		return fileEntryRepository.findByDeskId(deskId);
+		return fileEntryRepository.findByDeskId(LoginService.LoginSession(deskId));
 	}
 	
 	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {

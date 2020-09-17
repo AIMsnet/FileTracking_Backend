@@ -23,11 +23,11 @@ public class FileEntryController {
 	@Autowired
 	private FileEntryService fileEntryService;
 	
-	@RequestMapping(value="/getFileEntryByDeskId/{deskId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> getFileEntryByDeskId(@PathVariable("deskId") Integer deskId){
+	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileEntryByDeskId(){
 		ResultModel resultModel = new ResultModel();
 		try{
-			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(deskId);
+			List<FileEntry> response=fileEntryService.getFileEntryByDeskId();
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){

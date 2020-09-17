@@ -31,6 +31,8 @@ public class LoginService {
 	@Autowired
 	private FileTypeRepository fileTypeRepository;
 	
+	private Integer deskId;
+	
 	public Desk deskLogin(String departmentName, String deskName, String password) {
 		Desk desk = deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
 		HttpSession session;
@@ -39,12 +41,36 @@ public class LoginService {
 			session.invalidate();
 		}
 		session= req.getSession(true);
-		session.setAttribute("deskId", desk.getDeskId());
+		session.setAttribute("desk", desk);
+		session.setMaxInactiveInterval(7*60);
 		return desk;
 	}
 	
-	public Desk saveUpdateDesk(Desk desk) {
-		return deskRepository.save(desk);
+	public static Integer LoginSession(Integer deskId) {
+		HttpSession session;
+		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		if((session=req.getSession(false))!=null) {
+			deskId=((Desk)session.getAttribute("desk")).getDeskId();
+		}
+		return deskId;
+	}
+	
+	public Desk saveDesk(Desk desk) {
+		return deskRepository.save(desk);	
+	}
+	
+	public Desk updateDesk(Desk desk) {
+		Desk deskObject = deskRepository.findByDeskId(LoginSession(deskId));
+		if(deskObject!=null) {
+			deskObject.setDepartment(deskObject.getDepartment());
+			deskObject.setDesignation(desk.getDesignation());
+			deskObject.setDeskHolder(desk.getDeskHolder());
+			deskObject.setDeskName(desk.getDeskName());
+			deskObject.setMobileNumber(desk.getMobileNumber());
+			deskObject.setPassword(desk.getPassword());
+			deskRepository.save(deskObject);
+		}
+		return deskObject;
 	}
 	
 	public List<Desk> getDeskByDepartment(Integer departmentId){

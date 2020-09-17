@@ -37,11 +37,25 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/saveUpdateDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveUpdateDesk(@RequestBody Desk desk){
+	@RequestMapping(value="/saveDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> saveDesk(@RequestBody Desk desk){
 		ResultModel resultModel = new ResultModel();
 		try{
-			Desk response=loginService.saveUpdateDesk(desk);
+			Desk response=loginService.saveDesk(desk);
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}	
+	
+	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk){
+		ResultModel resultModel = new ResultModel();
+		try{
+			Desk response=loginService.updateDesk(desk);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 		}catch(Exception e){
