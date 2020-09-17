@@ -7,7 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ex.file.dao.DeskRepository;
 import com.ex.file.dao.FileEntryRepository;
+import com.ex.file.entity.Desk;
 import com.ex.file.entity.FileEntry;
 
 @Service
@@ -17,6 +19,9 @@ public class FileEntryService {
 	@Autowired
 	private FileEntryRepository fileEntryRepository;
 	
+	@Autowired
+	private DeskRepository deskRepository;
+	
 	private Integer deskId;
 
 	public List<FileEntry> getFileEntryByDeskId(){
@@ -25,7 +30,9 @@ public class FileEntryService {
 	}
 	
 	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {
+		Desk desk = deskRepository.findByDeskId(LoginService.LoginSession(deskId));
 		FileEntry entry = null;
+		fileEntry.setDesk(desk);
 		FileEntry fileSave=fileEntryRepository.save(fileEntry);
 		FileEntry fileEntryData=fileEntryRepository.findByFileId(fileSave.getFileId());
 		if(fileEntryData!=null) {
