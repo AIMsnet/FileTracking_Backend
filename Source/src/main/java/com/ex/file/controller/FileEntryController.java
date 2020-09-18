@@ -49,9 +49,15 @@ public class FileEntryController {
 		logger.info("Saving-Updating FileEntry Data......!");
 		try{
 			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry);
-			resultModel.setData(response);
-			resultModel.setMessage("Success");
-			logger.info("Save-Update FileEntry Data Successfully.....!");
+			if(response!=null) {
+				resultModel.setData(response);
+				resultModel.setMessage("Success");
+				logger.info("Save-Update FileEntry Data Successfully.....!");
+			}else {
+				resultModel.setMessage("Please Login your Account.....!");
+				logger.info("Please Login your Account.....!");
+			}
+			
 		}catch(Exception e){
 			resultModel.setMessage("Error");
 			logger.info("FileEntry Data Saving-Updating Failed......!");

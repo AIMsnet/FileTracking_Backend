@@ -32,13 +32,15 @@ public class FileEntryService {
 	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {
 		Desk desk = deskRepository.findByDeskId(LoginService.LoginSession(deskId));
 		FileEntry entry = null;
-		fileEntry.setDesk(desk);
-		FileEntry fileSave=fileEntryRepository.save(fileEntry);
-		FileEntry fileEntryData=fileEntryRepository.findByFileId(fileSave.getFileId());
-		if(fileEntryData!=null) {
-			String fileStringId="File-"+fileEntryData.getFileId();
-			fileEntryData.setFileStringId(fileStringId);
-			entry = fileEntryRepository.save(fileEntryData);
+		if(desk!=null) {
+			fileEntry.setDesk(desk);
+			FileEntry fileSave=fileEntryRepository.save(fileEntry);
+			FileEntry fileEntryData=fileEntryRepository.findByFileId(fileSave.getFileId());
+			if(fileEntryData!=null) {
+				String fileStringId="File-"+fileEntryData.getFileId();
+				fileEntryData.setFileStringId(fileStringId);
+				entry = fileEntryRepository.save(fileEntryData);
+			}
 		}
 		return entry;
 	}

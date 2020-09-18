@@ -71,9 +71,14 @@ public class LoginController {
 		logger.info("Updating Desk Data......!");
 		try{
 			Desk response=loginService.updateDesk(desk);
-			resultModel.setData(response);
-			resultModel.setMessage("Success");
-			logger.info("Update Desk Data Successfully.....!");
+			if(response!=null) {
+				resultModel.setData(response);
+				resultModel.setMessage("Success");
+				logger.info("Update Desk Data Successfully.....!");
+			}else {
+				resultModel.setMessage("Please Login your Account.....!");
+				logger.info("Please Login your Account.....!");
+			}
 		}catch(Exception e){
 			resultModel.setMessage("Error");
 			logger.info("Desk Data Updating Failed......!");
