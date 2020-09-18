@@ -37,12 +37,14 @@ public class LoginService {
 		Desk desk = deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
 		HttpSession session;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		if((session=req.getSession(false))!=null) {
-			session.invalidate();
+		if(desk!=null) {
+			if((session=req.getSession(false))!=null) {
+				session.invalidate();
+			}
+			session= req.getSession(true);
+			session.setAttribute("desk", desk);
+			session.setMaxInactiveInterval(7*60);
 		}
-		session= req.getSession(true);
-		session.setAttribute("desk", desk);
-		session.setMaxInactiveInterval(7*60);
 		return desk;
 	}
 	
