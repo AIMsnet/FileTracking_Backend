@@ -37,8 +37,8 @@ public class Desk implements Serializable{
 	@Column(name="designation")
 	private String designation;
 	
-	@Column(name="mobile_number")
-	private Integer mobileNumber;
+	@Column(name="mobile_number", length = 20)
+	private String mobileNumber;
 	
 	@ManyToOne
 	@JoinColumn(name="department_id")
@@ -92,11 +92,11 @@ public class Desk implements Serializable{
 		this.designation = designation;
 	}
 
-	public Integer getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(Integer mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
