@@ -26,12 +26,12 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
-	@RequestMapping(value="/deskLogin/{departmentName}/{deskName}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentName") String departmentName, @PathVariable("deskName") String deskName , @PathVariable("password") String password){
+	@RequestMapping(value="/deskLogin/{departmentId}/{deskId}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
 		try{
-			Desk response=loginService.deskLogin(departmentName, deskName, password);
+			Desk response=loginService.deskLogin(departmentId, deskId, password);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");

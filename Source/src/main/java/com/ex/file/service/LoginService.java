@@ -33,8 +33,8 @@ public class LoginService {
 	
 	private Integer deskId;
 	
-	public Desk deskLogin(String departmentName, String deskName, String password) {
-		Desk desk = deskRepository.findByDepartmentNameAndDeskNameAndPassword(departmentName, deskName, password);
+	public Desk deskLogin(Integer departmentId, Integer deskId, String password) {
+		Desk desk = deskRepository.findByDepartmentIdAndDeskIdAndPassword(departmentId, deskId, password);
 		HttpSession session;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		if(desk!=null) {
