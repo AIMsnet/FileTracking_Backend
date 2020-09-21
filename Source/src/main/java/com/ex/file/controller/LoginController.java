@@ -40,10 +40,10 @@ public class LoginController {
 				responseHeaders.set("sessionId", response.getSessionId());
 				resultModel.setData(response.getDesk());
 				resultModel.setMessage("Success");
-				logger.info("Authenticate Successfully.......");
+				logger.info("Authentication Successfully.......");
 			}else {
 				resultModel.setMessage("Failed");
-				logger.info("Authenticate Failed.......");
+				logger.info("Authentication Failed.......");
 			}		
 		}catch(Exception e){
 			resultModel.setMessage("Error");
@@ -55,6 +55,22 @@ public class LoginController {
 			      //.body(resultModel);
 	return new ResponseEntity<ResultModel>(resultModel, responseHeaders, HttpStatus.OK);
 	}
+	
+	/*@RequestMapping(value="/deskLogout", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> deskLogout(@RequestHeader ("sessionid") String sessionid){
+		ResultModel resultModel = new ResultModel();
+		logger.info("Log Out....!");
+		try{
+			loginService.deskLogout(sessionid);
+			resultModel.setMessage("Success");
+			logger.info("Log Out Successfully.....!");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			logger.info("Log Out Failed......!");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}*/
 	
 	@RequestMapping(value="/saveDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultModel> saveDesk(@RequestBody Desk desk){

@@ -51,9 +51,23 @@ public class LoginService {
 				deskDto.setSessionId(session.getId());
 				deskDto.setDesk(desk);
 			}
+		}else {
+			return null;
 		}
 		return deskDto;
 	}
+	
+	/*public void deskLogout(String sessionid) {
+		HttpSession oldsession;
+		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		oldsession=req.getSession(false);
+		String oldSessionId=oldsession.getId();
+		if(oldSessionId.equals(sessionid)){
+			System.out.println("Logout");
+			System.out.println("Logout session id="+oldsession.getId());
+			oldsession.invalidate();
+		}
+	}*/
 	
 	public static Integer LoginSession(String sessionid) {
 		Integer deskId = null;
