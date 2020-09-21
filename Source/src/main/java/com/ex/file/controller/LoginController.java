@@ -1,6 +1,7 @@
 package com.ex.file.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,12 @@ public class LoginController {
 	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
+		HttpHeaders responseHeaders = new HttpHeaders();
 		try{
 			DeskDto response=loginService.deskLogin(departmentId, deskId, password);
 			if(response!=null) {
-				resultModel.setData(response);
+				responseHeaders.set("sessionId", response.getSessionId());
+				resultModel.setData(response.getDesk());
 				resultModel.setMessage("Success");
 				logger.info("Authenticate Successfully.......");
 			}else {
@@ -47,7 +50,10 @@ public class LoginController {
 			logger.info("Error Occure"+e);
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+		return ResponseEntity.ok()
+			      .headers(responseHeaders)
+			      .body(resultModel);
+	//return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/saveDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
@@ -68,11 +74,11 @@ public class LoginController {
 	}	
 	
 	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionid") String sessionid){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		try{
-			Desk response=loginService.updateDesk(desk,sessionId);
+			Desk response=loginService.updateDesk(desk,sessionid);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");

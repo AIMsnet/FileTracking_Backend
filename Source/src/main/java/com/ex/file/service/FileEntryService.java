@@ -22,13 +22,13 @@ public class FileEntryService {
 	@Autowired
 	private DeskRepository deskRepository;
 	
-    public List<FileEntry> getFileEntryByDeskId(String sessionId){
-		Integer deskId=LoginService.LoginSession(sessionId);
+    public List<FileEntry> getFileEntryByDeskId(String sessionid){
+		Integer deskId=LoginService.LoginSession(sessionid);
 		return fileEntryRepository.findByDeskId(deskId);
 	}
 	
-	public FileEntry saveUpdateFileEntry(FileEntry fileEntry, String sessionId) {
-		Integer deskId=LoginService.LoginSession(sessionId);
+	public FileEntry saveUpdateFileEntry(FileEntry fileEntry, String sessionid) {
+		Integer deskId=LoginService.LoginSession(sessionid);
 		Desk desk = deskRepository.findByDeskId(deskId);
 		FileEntry entry = null;
 		if(desk!=null) {
