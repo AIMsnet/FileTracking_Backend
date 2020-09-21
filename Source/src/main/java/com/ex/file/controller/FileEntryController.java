@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,12 +27,12 @@ public class FileEntryController {
 	@Autowired
 	private FileEntryService fileEntryService;
 	
-/*	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> getFileEntryByDeskId(){
+	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileEntryByDeskId(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting FileEntry Data By DeskId......!");
 		try{
-			List<FileEntry> response=fileEntryService.getFileEntryByDeskId();
+			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(sessionId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 			logger.info("Getting FileEntry Data Successfully.....!");
@@ -44,11 +45,11 @@ public class FileEntryController {
 	}
 	
 	@RequestMapping(value="/saveUpdateFileEntry", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveUpdateFileEntry(@RequestBody FileEntry fileEntry){
+	public ResponseEntity<ResultModel> saveUpdateFileEntry(@RequestBody FileEntry fileEntry, @RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Saving-Updating FileEntry Data......!");
 		try{
-			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry);
+			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry,sessionId);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");
@@ -81,5 +82,5 @@ public class FileEntryController {
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
-	}*/
+	}
 }

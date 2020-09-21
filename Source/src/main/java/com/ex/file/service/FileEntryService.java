@@ -22,15 +22,14 @@ public class FileEntryService {
 	@Autowired
 	private DeskRepository deskRepository;
 	
-	private Integer deskId;
-
-/*	public List<FileEntry> getFileEntryByDeskId(){
-		System.out.println("desk");
-		return fileEntryRepository.findByDeskId(LoginService.LoginSession(deskId));
+    public List<FileEntry> getFileEntryByDeskId(String sessionId){
+		Integer deskId=LoginService.LoginSession(sessionId);
+		return fileEntryRepository.findByDeskId(deskId);
 	}
 	
-	public FileEntry saveUpdateFileEntry(FileEntry fileEntry) {
-		Desk desk = deskRepository.findByDeskId(LoginService.LoginSession(deskId));
+	public FileEntry saveUpdateFileEntry(FileEntry fileEntry, String sessionId) {
+		Integer deskId=LoginService.LoginSession(sessionId);
+		Desk desk = deskRepository.findByDeskId(deskId);
 		FileEntry entry = null;
 		if(desk!=null) {
 			fileEntry.setDesk(desk);
@@ -47,5 +46,5 @@ public class FileEntryService {
 	
 	public FileEntry getFileEntryByFilestringId(String fileStringId){
 		return fileEntryRepository.findByFileStringId(fileStringId);
-	}*/
+	}
 }

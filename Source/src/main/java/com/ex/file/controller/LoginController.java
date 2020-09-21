@@ -6,9 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.ex.file.service.LoginService;
@@ -67,8 +67,8 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
 	
-	@RequestMapping(value="/updateDesk/{sessionId}", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@PathVariable ("sessionId") String sessionId){
+	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		try{

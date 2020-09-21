@@ -32,25 +32,21 @@ public class LoginService {
 	@Autowired
 	private FileTypeRepository fileTypeRepository;
 	
-	private Integer deskId;
-	
-	
 	public DeskDto deskLogin(Integer departmentId, Integer deskId, String password) {
 		DeskDto deskDto=new DeskDto();
 		Desk desk = deskRepository.findByDepartmentIdAndDeskIdAndPassword(departmentId, deskId, password);
 		HttpSession session;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		if(desk!=null) {
-			System.out.println("Inside Login first If");
 			if((session=req.getSession(false))!=null) {
-				System.out.println("Inside Login 2 If");
-				System.out.println("Inside Login 2 If session id="+session.getId());
+				System.out.println("Logout");
+				System.out.println("Logout session id="+session.getId());
 				session.invalidate();
 			}else {
-				System.out.println("Outside 2 nd if");
+				System.out.println("Login In");
 				session= req.getSession(true);
 				session.setAttribute("desk", desk);
-				System.out.println("Outside 2 nd if Sesion Id="+session.getId());
+				System.out.println("Login In Sesion Id="+session.getId());
 				session.setMaxInactiveInterval(7*60);
 				deskDto.setSessionId(session.getId());
 				deskDto.setDesk(desk);
@@ -61,14 +57,12 @@ public class LoginService {
 	
 	public static Integer LoginSession(String sessionId) {
 		Integer deskId = null;
-		HttpSession session;
+		HttpSession oldsession;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		HttpSession oldsession=session=req.getSession(false);
-		String os=oldsession.getId();
-		System.out.println("Strting LoginSession API if");
-		if(os.equals(sessionId)){
-			System.out.println("LoginSession API session Id="+session.getId());
-			deskId=((Desk)session.getAttribute("desk")).getDeskId();
+		oldsession=req.getSession(false);
+		String oldSessionId=oldsession.getId();
+		if(oldSessionId.equals(sessionId)){
+			deskId=((Desk)oldsession.getAttribute("desk")).getDeskId();
 		}
 		return deskId;
 	}
