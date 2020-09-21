@@ -33,12 +33,12 @@ public class LoginController {
 	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
-		HttpHeaders responseHeaders = new HttpHeaders();
+		//HttpHeaders responseHeaders = new HttpHeaders();
 		try{
 			DeskDto response=loginService.deskLogin(departmentId, deskId, password);
 			if(response!=null) {
-				responseHeaders.set("sessionId", response.getSessionId());
-				resultModel.setData(response.getDesk());
+			//	responseHeaders.set("sessionId", response.getSessionId());
+				resultModel.setData(response);
 				resultModel.setMessage("Success");
 				logger.info("Authentication Successfully.......");
 			}else {
@@ -53,7 +53,7 @@ public class LoginController {
 		//return ResponseEntity.ok()
 			     // .headers(responseHeaders)
 			      //.body(resultModel);
-	return new ResponseEntity<ResultModel>(resultModel, responseHeaders, HttpStatus.OK);
+	return new ResponseEntity<ResultModel>(resultModel,HttpStatus.OK);
 	}
 	
 	/*@RequestMapping(value="/deskLogout", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
