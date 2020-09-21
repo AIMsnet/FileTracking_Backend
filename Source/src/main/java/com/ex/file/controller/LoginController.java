@@ -93,8 +93,11 @@ public class LoginController {
 	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
+		System.out.println("session id = "+ sessionId);
 		try{
+			System.out.println("Inside try");
 			Desk response=loginService.updateDesk(desk,sessionId);
+			System.out.println("response found");
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");

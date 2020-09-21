@@ -86,7 +86,7 @@ public class LoginService {
 	}
 	
 	public Desk updateDesk(Desk desk,String sessionId) {
-		System.out.println("Update Session Id = "+ LoginSession(sessionId));
+		System.out.println("Update api Session Id = "+ sessionId);
 		Integer dId=LoginSession(sessionId);
 		Desk deskObject = deskRepository.findByDeskId(dId);
 		System.out.println("UpdateDesk API DeskId="+dId);
