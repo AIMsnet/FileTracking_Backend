@@ -69,13 +69,13 @@ public class LoginService {
 		}
 	}*/
 	
-	public static Integer LoginSession(String sessionid) {
+	public static Integer LoginSession(String sessionId) {
 		Integer deskId = null;
 		HttpSession oldsession;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		oldsession=req.getSession(false);
 		String oldSessionId=oldsession.getId();
-		if(oldSessionId.equals(sessionid)){
+		if(oldSessionId.equals(sessionId)){
 			deskId=((Desk)oldsession.getAttribute("desk")).getDeskId();
 		}
 		return deskId;
@@ -85,8 +85,9 @@ public class LoginService {
 		return deskRepository.save(desk);	
 	}
 	
-	public Desk updateDesk(Desk desk,String sessionid) {
-		Integer dId=LoginSession(sessionid);
+	public Desk updateDesk(Desk desk,String sessionId) {
+		System.out.println("Update Session Id = "+ LoginSession(sessionId));
+		Integer dId=LoginSession(sessionId);
 		Desk deskObject = deskRepository.findByDeskId(dId);
 		System.out.println("UpdateDesk API DeskId="+dId);
 		if(deskObject!=null) {

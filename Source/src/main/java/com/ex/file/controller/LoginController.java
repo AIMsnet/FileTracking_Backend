@@ -90,11 +90,11 @@ public class LoginController {
 	}	
 	
 	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionid") String sessionid){
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		try{
-			Desk response=loginService.updateDesk(desk,sessionid);
+			Desk response=loginService.updateDesk(desk,sessionId);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");

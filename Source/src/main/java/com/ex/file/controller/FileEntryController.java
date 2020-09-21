@@ -28,11 +28,11 @@ public class FileEntryController {
 	private FileEntryService fileEntryService;
 	
 	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> getFileEntryByDeskId(@RequestHeader ("sessionid") String sessionid){
+	public ResponseEntity<ResultModel> getFileEntryByDeskId(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting FileEntry Data By DeskId......!");
 		try{
-			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(sessionid);
+			List<FileEntry> response=fileEntryService.getFileEntryByDeskId(sessionId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 			logger.info("Getting FileEntry Data Successfully.....!");
@@ -45,11 +45,11 @@ public class FileEntryController {
 	}
 	
 	@RequestMapping(value="/saveUpdateFileEntry", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> saveUpdateFileEntry(@RequestBody FileEntry fileEntry, @RequestHeader ("sessionid") String sessionid){
+	public ResponseEntity<ResultModel> saveUpdateFileEntry(@RequestBody FileEntry fileEntry, @RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Saving-Updating FileEntry Data......!");
 		try{
-			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry,sessionid);
+			FileEntry response=fileEntryService.saveUpdateFileEntry(fileEntry,sessionId);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");
