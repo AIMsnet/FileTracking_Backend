@@ -14,9 +14,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ex.file.dao.DepartmentRepository;
 import com.ex.file.dao.DeskRepository;
 import com.ex.file.dao.FileTypeRepository;
+import com.ex.file.dao.LoginSessionRepository;
 import com.ex.file.dto.DeskDto;
 import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
+import com.ex.file.entity.LoginSession;
 import com.ex.file.entity.FileType;
 
 @Service
@@ -32,13 +34,16 @@ public class LoginService {
 	@Autowired
 	private FileTypeRepository fileTypeRepository;
 	
+	@Autowired
+	private LoginSessionRepository loginSessionRepository; 
+	
 	public DeskDto deskLogin(Integer departmentId, Integer deskId, String password) {
 		DeskDto deskDto=new DeskDto();
 		Desk desk = deskRepository.findByDepartmentIdAndDeskIdAndPassword(departmentId, deskId, password);
 		HttpSession session;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		if(desk!=null) {
-			if((session=req.getSession(false))!=null) {
+			/*if((session=req.getSession(false))!=null) {
 				System.out.println("Logout");
 				System.out.println("Logout session id="+session.getId());
 				session.invalidate();
@@ -50,24 +55,36 @@ public class LoginService {
 				session.setMaxInactiveInterval(7*60);
 				deskDto.setSessionId(session.getId());
 				deskDto.setDesk(desk);
-			}
+			}*/
+			System.out.println("Login In");
+			session= req.getSession(true);
+			session.setAttribute("desk", desk);
+			System.out.println("Login In Sesion Id="+session.getId());
+			session.setMaxInactiveInterval(7*60);
+			deskDto.setSessionId(session.getId());
+			deskDto.setDesk(desk);
+			com.ex.file.entity.LoginSession loginSession = new LoginSession();
+			loginSession.setDeskId(desk.getDeskId());
+			loginSession.setSessionId(session.getId());
+			loginSessionRepository.save(loginSession);
 		}else {
 			return null;
 		}
 		return deskDto;
 	}
 	
-	/*public void deskLogout(String sessionid) {
+	public void deskLogout(String sessionId) {
 		HttpSession oldsession;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		oldsession=req.getSession(false);
-		String oldSessionId=oldsession.getId();
-		if(oldSessionId.equals(sessionid)){
+		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
+		if(loginSession!=null){
 			System.out.println("Logout");
 			System.out.println("Logout session id="+oldsession.getId());
 			oldsession.invalidate();
+			loginSessionRepository.delete(loginSession);
 		}
-	}*/
+	}
 	
 	public static Integer LoginSession(String sessionId) {
 		Integer deskId = null;
@@ -87,9 +104,11 @@ public class LoginService {
 	
 	public Desk updateDesk(Desk desk,String sessionId) {
 		System.out.println("Update api Session Id = "+ sessionId);
-		Integer dId=LoginSession(sessionId);
-		Desk deskObject = deskRepository.findByDeskId(dId);
-		System.out.println("UpdateDesk API DeskId="+dId);
+		//Integer dId=LoginSession(sessionId);
+		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
+		Integer deskId=loginSession.getDeskId();
+		Desk deskObject = deskRepository.findByDeskId(deskId);
+		System.out.println("UpdateDesk API DeskId="+deskId);
 		if(deskObject!=null) {
 			deskObject.setDepartment(deskObject.getDepartment());
 			deskObject.setDesignation(desk.getDesignation());

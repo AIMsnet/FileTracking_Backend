@@ -27,7 +27,7 @@ public class FileEntryController {
 	@Autowired
 	private FileEntryService fileEntryService;
 	
-	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+/*	@RequestMapping(value="/getFileEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultModel> getFileEntryByDeskId(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting FileEntry Data By DeskId......!");
@@ -82,5 +82,5 @@ public class FileEntryController {
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
-	}
+	}*/
 }

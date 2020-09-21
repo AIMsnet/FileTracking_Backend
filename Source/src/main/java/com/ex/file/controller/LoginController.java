@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.ex.file.service.LoginService;
 import com.ex.file.dto.DeskDto;
 import com.ex.file.dto.ResultModel;
@@ -30,7 +34,7 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(value="/deskLogin/{departmentId}/{deskId}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password){
+	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password, HttpServletRequest request){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
 		//HttpHeaders responseHeaders = new HttpHeaders();
@@ -56,12 +60,12 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel,HttpStatus.OK);
 	}
 	
-	/*@RequestMapping(value="/deskLogout", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> deskLogout(@RequestHeader ("sessionid") String sessionid){
+	@RequestMapping(value="/deskLogout", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> deskLogout(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Log Out....!");
 		try{
-			loginService.deskLogout(sessionid);
+			loginService.deskLogout(sessionId);
 			resultModel.setMessage("Success");
 			logger.info("Log Out Successfully.....!");
 		}catch(Exception e){
@@ -70,7 +74,7 @@ public class LoginController {
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
-	}*/
+	}
 	
 	@RequestMapping(value="/saveDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResultModel> saveDesk(@RequestBody Desk desk){
@@ -90,7 +94,7 @@ public class LoginController {
 	}	
 	
 	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId,HttpServletRequest request){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		System.out.println("session id = "+ sessionId);
