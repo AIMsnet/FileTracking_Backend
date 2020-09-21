@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.ex.file.service.LoginService;
+import com.ex.file.dto.DeskDto;
 import com.ex.file.dto.ResultModel;
 import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
@@ -31,7 +33,7 @@ public class LoginController {
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
 		try{
-			Desk response=loginService.deskLogin(departmentId, deskId, password);
+			DeskDto response=loginService.deskLogin(departmentId, deskId, password);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");
@@ -65,12 +67,12 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}	
 	
-	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk){
+	@RequestMapping(value="/updateDesk/{sessionId}", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@PathVariable ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		try{
-			Desk response=loginService.updateDesk(desk);
+			Desk response=loginService.updateDesk(desk,sessionId);
 			if(response!=null) {
 				resultModel.setData(response);
 				resultModel.setMessage("Success");

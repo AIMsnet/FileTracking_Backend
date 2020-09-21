@@ -24,7 +24,7 @@ public class FileEntryService {
 	
 	private Integer deskId;
 
-	public List<FileEntry> getFileEntryByDeskId(){
+/*	public List<FileEntry> getFileEntryByDeskId(){
 		System.out.println("desk");
 		return fileEntryRepository.findByDeskId(LoginService.LoginSession(deskId));
 	}
@@ -47,5 +47,5 @@ public class FileEntryService {
 	
 	public FileEntry getFileEntryByFilestringId(String fileStringId){
 		return fileEntryRepository.findByFileStringId(fileStringId);
-	}
+	}*/
 }
