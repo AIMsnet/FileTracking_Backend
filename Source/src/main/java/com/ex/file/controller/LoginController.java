@@ -50,10 +50,10 @@ public class LoginController {
 			logger.info("Error Occure"+e);
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		return ResponseEntity.ok()
-			      .headers(responseHeaders)
-			      .body(resultModel);
-	//return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+		//return ResponseEntity.ok()
+			     // .headers(responseHeaders)
+			      //.body(resultModel);
+	return new ResponseEntity<ResultModel>(resultModel, responseHeaders, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/saveDesk", method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
