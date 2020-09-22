@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +28,12 @@ public class NotingEntryController {
 	@Autowired
 	private NotingEntryService notingEntryService;
 	
-	@RequestMapping(value="/getNotingEntryByDeskId/{deskId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> getNotingEntryByDeskId(@PathVariable("deskId") Integer deskId){
+	@RequestMapping(value="/getNotingEntryByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getNotingEntryByDeskId(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting NotingEntry Data By DeskId......!");
 		try{
-			List<NotingEntryForwarded> response=notingEntryService.getNotingEntryByDeskId(deskId);
+			List<NotingEntry> response=notingEntryService.getNotingEntryByDeskId(sessionId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 			logger.info("Getting NotingEntry Data Successfully.....!");

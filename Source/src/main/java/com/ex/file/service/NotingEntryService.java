@@ -1,15 +1,25 @@
 package com.ex.file.service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ex.file.dao.FileEntryRepository;
+import com.ex.file.dao.LoginSessionRepository;
 import com.ex.file.dao.NotingEntryForwardedRepository;
 import com.ex.file.dao.NotingEntryRepository;
 import com.ex.file.dto.NotingEntryDto;
+import com.ex.file.entity.FileEntry;
+import com.ex.file.entity.LoginSession;
 import com.ex.file.entity.NotingEntry;
 import com.ex.file.entity.NotingEntryForwarded;
 
@@ -22,6 +32,15 @@ public class NotingEntryService {
 
 	@Autowired
 	private NotingEntryForwardedRepository notingEntryForwardedRepository;
+	
+	@Autowired
+	private LoginSessionRepository loginSessionRepository; 
+	
+	@Autowired
+	private FileEntryRepository fileEntryRepository;
+	
+	@PersistenceContext
+	private EntityManager em;
 
 	public NotingEntryForwarded saveNotingEntry(NotingEntryDto dto) {
 		List<NotingEntry> list = notingEntryRepository.findByFileEntry(dto.getNotingEntry().getFileEntry().getFileId());
@@ -82,8 +101,35 @@ public class NotingEntryService {
 		return notingEntry;
 	}
 
-	public List<NotingEntryForwarded> getNotingEntryByDeskId(Integer deskId) {
-		return notingEntryForwardedRepository.findByDeskId(deskId);
+	public List<NotingEntry> getNotingEntryByDeskId(String sessionId) {
+		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
+		Integer deskId=loginSession.getDeskId();
+		List<NotingEntry> notingEntryList = new ArrayList<NotingEntry>();
+		Query q = em.createNativeQuery("SELECT n.* FROM file_entry AS f " + 
+				"inner join noting_entry AS n " + 
+				"ON n.file_id=f.file_id " + 
+				"where desk_id = "+deskId+" ");
+		List<Object[]> objArrayList = q.getResultList();
+		for(Object[] obj : objArrayList) {
+			NotingEntry notingEntry = new NotingEntry();
+			FileEntry fileEntry = fileEntryRepository.findByFileId(Integer.parseInt(obj[2].toString()));
+			notingEntry.setNotingEntryId(Integer.parseInt(obj[0].toString()));
+			notingEntry.setTipniId(Integer.parseInt(obj[1].toString()));
+			notingEntry.setFileEntry(fileEntry);
+			notingEntry.setLetterReference(obj[3].toString());
+			notingEntry.setLetterDate((Date) obj[4]);
+			notingEntry.setTipniSubject(obj[5].toString());
+			notingEntry.setTipniDetails(obj[6].toString());
+			notingEntry.setPageNoOfRemarkInTipni(Integer.parseInt(obj[7].toString()));
+			notingEntry.setPageNoOfSupportingDocs(Integer.parseInt(obj[8].toString()));
+			notingEntry.setTipniStatus(obj[9].toString());
+			notingEntry.setCreatedBy(obj[10].toString());
+			notingEntry.setCreatedDate((Timestamp) obj[11]);
+			notingEntry.setUpdatedBy(obj[12] !=null ? obj[12].toString() : null);
+			notingEntry.setUpdaeDate(obj[13]!=null ? (Timestamp) obj[13] : null);
+			notingEntryList.add(notingEntry);
+		}
+		return notingEntryList;
 	}
 	
 	public List<NotingEntryForwarded> getNotingEntryByTipniStatus(String status){
