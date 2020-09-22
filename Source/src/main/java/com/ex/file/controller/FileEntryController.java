@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ex.file.dto.FileDetailsDto;
 import com.ex.file.dto.ResultModel;
 import com.ex.file.entity.FileEntry;
 import com.ex.file.service.FileEntryService;
@@ -79,6 +80,24 @@ public class FileEntryController {
 		}catch(Exception e){
 			resultModel.setMessage("Error");
 			logger.info("Getting FileEntry Data Failed......!");
+			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/getFileDetails", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getFileDetails(){
+		ResultModel resultModel = new ResultModel();
+		logger.info("Getting FileDetails Data......!");
+		try{
+			FileDetailsDto response=fileEntryService.fileDetailsDto();
+			resultModel.setData(response);
+			resultModel.setMessage("Success");
+			logger.info("Getting FileDetails Data Successfully.....!");
+		}catch(Exception e){
+			resultModel.setMessage("Error");
+			logger.info("Getting FileDetails Data Failed......!");
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);

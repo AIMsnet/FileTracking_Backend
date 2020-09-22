@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ex.file.dao.DeskRepository;
 import com.ex.file.dao.FileEntryRepository;
 import com.ex.file.dao.LoginSessionRepository;
+import com.ex.file.dto.FileDetailsDto;
 import com.ex.file.entity.Desk;
 import com.ex.file.entity.FileEntry;
 import com.ex.file.entity.LoginSession;
@@ -53,5 +54,22 @@ public class FileEntryService {
 	
 	public FileEntry getFileEntryByFilestringId(String fileStringId){
 		return fileEntryRepository.findByFileStringId(fileStringId);
+	}
+	
+	public FileDetailsDto fileDetailsDto() {
+		Integer totalCreatedFiles=fileEntryRepository.records("Created");
+		Integer totalReceivedFiles=fileEntryRepository.records("Recived");
+		Integer totalSentFiles=fileEntryRepository.records("send");
+		Integer totalPendingFiles=fileEntryRepository.records("Pending");
+		Integer totalClosedFiles=fileEntryRepository.records("Closed");
+		
+		FileDetailsDto file=new FileDetailsDto();
+		
+		file.setTotalCreatedFiles(totalCreatedFiles);
+		file.setTotalReceivedFiles(totalReceivedFiles);
+		file.setTotalForwordOrSentFiles(totalSentFiles);
+		file.setTotalPendingFiles(totalPendingFiles);
+		file.setTotalClosedFiles(totalClosedFiles);
+		return file;	
 	}
 }

@@ -19,4 +19,7 @@ public interface FileEntryRepository extends CrudRepository<FileEntry, Integer>{
 	
 	@Query("select m from FileEntry m where m.fileStringId=:fileStringId")
 	public FileEntry findByFileStringId(String fileStringId);
+	
+	@Query("select count(m)from FileEntry m where m.fileStatus=:fileStatus")
+	public Integer records(String fileStatus);
 }
