@@ -137,7 +137,9 @@ public class LoginService {
 		return departmentRepository.save(department);
 	}
 	
-	public Desk getDeskByDeskId(Integer deskId) {
+	public Desk getDeskByDeskId(String sessionId) {
+		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
+		Integer deskId=loginSession.getDeskId();
 		return deskRepository.findByDeskId(deskId);
 	}
 	

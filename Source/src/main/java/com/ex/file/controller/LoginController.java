@@ -1,7 +1,6 @@
 package com.ex.file.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.ex.file.service.LoginService;
 import com.ex.file.dto.DeskDto;
@@ -94,7 +92,7 @@ public class LoginController {
 	}	
 	
 	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId,HttpServletRequest request){
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		System.out.println("session id = "+ sessionId);
@@ -186,12 +184,12 @@ public class LoginController {
 	return new ResponseEntity<ResultModel>(resultModel, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/getDeskByDeskId/{deskId}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> getDeskByDeskId(@PathVariable("deskId") Integer deskId){
+	@RequestMapping(value="/getDeskByDeskId", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResultModel> getDeskByDeskId(@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting Desk Data By DeskId......!");
 		try{
-			Desk response=loginService.getDeskByDeskId(deskId);
+			Desk response=loginService.getDeskByDeskId(sessionId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 			logger.info("Getting Desk Data Successfully.....!");
