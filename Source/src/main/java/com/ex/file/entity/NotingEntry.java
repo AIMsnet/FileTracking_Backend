@@ -2,6 +2,7 @@ package com.ex.file.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -54,13 +55,13 @@ public class NotingEntry implements Serializable{
 	private String createdBy;
 	
 	@Column(name="created_date")
-	private String createdDate;
+	private Timestamp createdDate;
 	
 	@Column(name="updated_by")
 	private String updatedBy;
 	
 	@Column(name="updated_date")
-	private String updaeDate;
+	private Timestamp updaeDate;
 	
 	@ManyToOne
 	@JoinColumn(name="file_id")
@@ -150,28 +151,12 @@ public class NotingEntry implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
-	}
-
-	public String getUpdaeDate() {
-		return updaeDate;
-	}
-
-	public void setUpdaeDate(String updaeDate) {
-		this.updaeDate = updaeDate;
 	}
 
 	public FileEntry getFileEntry() {
@@ -188,5 +173,21 @@ public class NotingEntry implements Serializable{
 
 	public void setNotingEntryForwarded(List<NotingEntryForwarded> notingEntryForwarded) {
 		this.notingEntryForwarded = notingEntryForwarded;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getUpdaeDate() {
+		return updaeDate;
+	}
+
+	public void setUpdaeDate(Timestamp updaeDate) {
+		this.updaeDate = updaeDate;
 	}
 }

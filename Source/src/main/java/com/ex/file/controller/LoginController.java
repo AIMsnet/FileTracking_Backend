@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.ex.file.service.LoginService;
 import com.ex.file.dto.DeskDto;
 import com.ex.file.dto.ResultModel;
@@ -32,7 +30,7 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(value="/deskLogin/{departmentId}/{deskId}/{password}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password, HttpServletRequest request){
+	public ResponseEntity<ResultModel> deskLogin(@PathVariable("departmentId") Integer departmentId, @PathVariable("deskId") Integer deskId , @PathVariable("password") String password){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Authenticating...........");
 		//HttpHeaders responseHeaders = new HttpHeaders();
