@@ -13,11 +13,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ex.file.dao.DepartmentRepository;
 import com.ex.file.dao.DeskRepository;
+import com.ex.file.dao.EmployeeDetailsRepository;
 import com.ex.file.dao.FileTypeRepository;
 import com.ex.file.dao.LoginSessionRepository;
 import com.ex.file.dto.DeskDto;
 import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
+import com.ex.file.entity.EmployeeDetails;
 import com.ex.file.entity.LoginSession;
 import com.ex.file.entity.FileType;
 
@@ -37,25 +39,15 @@ public class LoginService {
 	@Autowired
 	private LoginSessionRepository loginSessionRepository; 
 	
+	@Autowired
+	private EmployeeDetailsRepository employeeDetailsRepository;
+	
 	public DeskDto deskLogin(Integer departmentId, Integer deskId, String password) {
 		DeskDto deskDto=new DeskDto();
 		Desk desk = deskRepository.findByDepartmentIdAndDeskIdAndPassword(departmentId, deskId, password);
 		HttpSession session;
 		HttpServletRequest req= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		if(desk!=null) {
-			/*if((session=req.getSession(false))!=null) {
-				System.out.println("Logout");
-				System.out.println("Logout session id="+session.getId());
-				session.invalidate();
-			}else {
-				System.out.println("Login In");
-				session= req.getSession(true);
-				session.setAttribute("desk", desk);
-				System.out.println("Login In Sesion Id="+session.getId());
-				session.setMaxInactiveInterval(7*60);
-				deskDto.setSessionId(session.getId());
-				deskDto.setDesk(desk);
-			}*/
 			System.out.println("Login In");
 			session= req.getSession(true);
 			session.setAttribute("desk", desk);
@@ -102,23 +94,28 @@ public class LoginService {
 		return deskRepository.save(desk);	
 	}
 	
-	public Desk updateDesk(Desk desk,String sessionId) {
-		System.out.println("Update api Session Id = "+ sessionId);
+	public EmployeeDetails updateDesk(EmployeeDetails employee,String sessionId) {
 		//Integer dId=LoginSession(sessionId);
 		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
 		Integer deskId=loginSession.getDeskId();
 		Desk deskObject = deskRepository.findByDeskId(deskId);
-		System.out.println("UpdateDesk API DeskId="+deskId);
+		EmployeeDetails employeeDetails = null;
 		if(deskObject!=null) {
 			deskObject.setDepartment(deskObject.getDepartment());
-			deskObject.setDesignation(desk.getDesignation());
-			deskObject.setDeskHolder(desk.getDeskHolder());
-			deskObject.setDeskName(desk.getDeskName());
-			deskObject.setMobileNumber(desk.getMobileNumber());
-			deskObject.setPassword(desk.getPassword());
+			deskObject.setDeskHolder(employee.getDesk().getDeskHolder());
+			deskObject.setDeskName(employee.getDesk().getDeskName());
+			deskObject.setPassword(employee.getDesk().getPassword());
+			deskObject.setUpdatedBy(employee.getDesk().getUpdatedBy());
+			deskObject.setUpdatedDate(employee.getDesk().getUpdatedDate());
 			deskRepository.save(deskObject);
+			employeeDetails = employeeDetailsRepository.findByDeskId(deskId);
+			employeeDetails.setDesignation(employee.getDesignation());
+			employeeDetails.setMobileNumber(employee.getMobileNumber());
+			employeeDetails.setUpdatedBy(employee.getUpdatedBy());
+			employeeDetails.setUpdatedDate(employee.getUpdatedDate());
+			employeeDetailsRepository.save(employeeDetails);
 		}
-		return deskObject;
+		return employeeDetails;
 	}
 	
 	public List<Desk> getDeskByDepartment(Integer departmentId){
@@ -137,10 +134,10 @@ public class LoginService {
 		return departmentRepository.save(department);
 	}
 	
-	public Desk getDeskByDeskId(String sessionId) {
+	public EmployeeDetails getDeskByDeskId(String sessionId) {
 		LoginSession loginSession = loginSessionRepository.findBySessionId(sessionId);
 		Integer deskId=loginSession.getDeskId();
-		return deskRepository.findByDeskId(deskId);
+		return employeeDetailsRepository.findByDeskId(deskId);
 	}
 	
 	public List<FileType> getAllFileType(){

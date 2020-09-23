@@ -17,13 +17,13 @@ import com.ex.file.dto.DeskDto;
 import com.ex.file.dto.ResultModel;
 import com.ex.file.entity.Department;
 import com.ex.file.entity.Desk;
+import com.ex.file.entity.EmployeeDetails;
 import com.ex.file.entity.FileType;
 import org.apache.log4j.Logger;
 
 @RestController 
 @RequestMapping(value="/login")
 public class LoginController {
-	
 	public final static Logger logger= Logger.getLogger(LoginController.class);
 	
 	@Autowired
@@ -50,9 +50,6 @@ public class LoginController {
 			logger.info("Error Occure"+e);
 			return new ResponseEntity<ResultModel>(resultModel, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		//return ResponseEntity.ok()
-			     // .headers(responseHeaders)
-			      //.body(resultModel);
 	return new ResponseEntity<ResultModel>(resultModel,HttpStatus.OK);
 	}
 	
@@ -90,13 +87,13 @@ public class LoginController {
 	}	
 	
 	@RequestMapping(value="/updateDesk", method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResultModel> updateDesk(@RequestBody Desk desk,@RequestHeader ("sessionId") String sessionId){
+	public ResponseEntity<ResultModel> updateDesk(@RequestBody EmployeeDetails employeeDetails,@RequestHeader ("sessionId") String sessionId){
 		ResultModel resultModel = new ResultModel();
 		logger.info("Updating Desk Data......!");
 		System.out.println("session id = "+ sessionId);
 		try{
 			System.out.println("Inside try");
-			Desk response=loginService.updateDesk(desk,sessionId);
+			EmployeeDetails response=loginService.updateDesk(employeeDetails,sessionId);
 			System.out.println("response found");
 			if(response!=null) {
 				resultModel.setData(response);
@@ -187,7 +184,7 @@ public class LoginController {
 		ResultModel resultModel = new ResultModel();
 		logger.info("Getting Desk Data By DeskId......!");
 		try{
-			Desk response=loginService.getDeskByDeskId(sessionId);
+			EmployeeDetails response=loginService.getDeskByDeskId(sessionId);
 			resultModel.setData(response);
 			resultModel.setMessage("Success");
 			logger.info("Getting Desk Data Successfully.....!");
