@@ -51,6 +51,10 @@ public class Department implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="department")
     private List<NotingEntryForwarded> notingEntryForwarded;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="department")
+    private List<EmployeeDetails> employeeDetails;
 
 	public Integer getDepartmentId() {
 		return departmentId;
@@ -130,5 +134,13 @@ public class Department implements Serializable{
 
 	public void setUpdatedDate(Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+	public List<EmployeeDetails> getEmployeeDetails() {
+		return employeeDetails;
+	}
+
+	public void setEmployeeDetails(List<EmployeeDetails> employeeDetails) {
+		this.employeeDetails = employeeDetails;
 	}	
 }

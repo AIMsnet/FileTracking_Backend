@@ -1,6 +1,7 @@
 package com.ex.file.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,11 +35,17 @@ public class Desk implements Serializable{
 	@Column(name="desk_holder")
 	private String deskHolder;
 	
-	@Column(name="designation")
-	private String designation;
+	@Column(name="created_by")
+	private String createdBy;
 	
-	@Column(name="mobile_number", length = 20)
-	private String mobileNumber;
+	@Column(name="updated_by")
+	private String updatedBy;
+	
+	@Column(name="created_date")
+	private Timestamp createdDate;
+	
+	@Column(name="updated_date")
+	private Timestamp updatedDate;
 	
 	@ManyToOne
 	@JoinColumn(name="department_id")
@@ -51,6 +58,10 @@ public class Desk implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="desk")
     private List<NotingEntryForwarded> notingEntryForwarded;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="desk")
+    private List<EmployeeDetails> employeeDetails;
 
 	public Integer getDeskId() {
 		return deskId;
@@ -84,20 +95,36 @@ public class Desk implements Serializable{
 		this.deskHolder = deskHolder;
 	}
 
-	public String getDesignation() {
-		return designation;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getUpdatedBy() {
+		return updatedBy;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Timestamp getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Timestamp updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	public Department getDepartment() {
@@ -122,5 +149,13 @@ public class Desk implements Serializable{
 
 	public void setNotingEntryForwarded(List<NotingEntryForwarded> notingEntryForwarded) {
 		this.notingEntryForwarded = notingEntryForwarded;
+	}
+
+	public List<EmployeeDetails> getEmployeeDetails() {
+		return employeeDetails;
+	}
+
+	public void setEmployeeDetails(List<EmployeeDetails> employeeDetails) {
+		this.employeeDetails = employeeDetails;
 	}
 }
